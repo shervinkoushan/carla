@@ -71,10 +71,8 @@ void ARadar::BeginPlay()
   PrevLocation = GetActorLocation();
 }
 
-float ARadar::ComputeIntensity(const FRadarDetection& RawDetection) const
+float ARadar::ComputeIntensity(const float& Distance) const
 {
-  const float Distance = RawDetection.depth;
-
   const float AttenAtm = AtmospAttenRate;
   const float AbsAtm = exp(-AttenAtm * Distance);
 
@@ -185,7 +183,8 @@ void ARadar::SendLineTraces(float DeltaTime)
         ray.RelativeVelocity,
         ray.AzimuthAndElevation.X,
         ray.AzimuthAndElevation.Y,
-        ray.Distance
+        ray.Distance,
+        ComputeIntensity(ray.Distance)
       });
     }
   }

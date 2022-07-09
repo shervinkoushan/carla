@@ -23,7 +23,6 @@ class CARLA_API ARadar : public ASensor
   GENERATED_BODY()
 
   using FRadarData = carla::sensor::data::RadarData;
-  using FRadarDetection = carla::sensor::data::RadarDetection;
 
 public:
 
@@ -72,7 +71,7 @@ protected:
 
 private:
 
-  float ComputeIntensity(const FRadarDetection& RawDetection) const;
+  float ComputeIntensity(const float& Distance) const;
 
   void CalculateCurrentVelocity(const float DeltaTime);
 
