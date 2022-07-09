@@ -1635,6 +1635,8 @@ void UActorBlueprintFunctionLibrary::SetRadar(
       RetrieveActorAttributeToFloat("range", Description.Variations, 100.0f) * TO_CENTIMETERS);
   Radar->SetPointsPerSecond(
       RetrieveActorAttributeToInt("points_per_second", Description.Variations, 1500));
+  Radar->SetAtmospAttenRate(
+      RetrieveActorAttributeToFloat("atmosphere_attenuation_rate", Description.Variations, 0.004));
 }
 
 #undef CARLA_ABFL_CHECK_ACTOR

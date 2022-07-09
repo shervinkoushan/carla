@@ -23,6 +23,7 @@ class CARLA_API ARadar : public ASensor
   GENERATED_BODY()
 
   using FRadarData = carla::sensor::data::RadarData;
+  using FRadarDetection = carla::sensor::data::RadarDetection;
 
 public:
 
@@ -44,6 +45,9 @@ public:
   UFUNCTION(BlueprintCallable, Category = "Radar")
   void SetPointsPerSecond(int NewPointsPerSecond);
 
+  UFUNCTION(BlueprintCallable, Category = "Radar")
+  void SetAtmospAttenRate(float NewAtmospAttenRate);
+
 protected:
 
   void BeginPlay() override;
@@ -63,7 +67,12 @@ protected:
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Detection")
   int PointsPerSecond;
 
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Detection")
+  float AtmospAttenRate;
+
 private:
+
+  float ComputeIntensity(const FRadarDetection& RawDetection) const;
 
   void CalculateCurrentVelocity(const float DeltaTime);
 

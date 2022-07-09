@@ -59,11 +59,28 @@ void ARadar::SetPointsPerSecond(int NewPointsPerSecond)
   RadarData.SetResolution(PointsPerSecond);
 }
 
+void ARadar::SetAtmospAttenRate(float NewAtmospAttenRate)
+{
+  AtmospAttenRate = NewAtmospAttenRate;
+}
+
 void ARadar::BeginPlay()
 {
   Super::BeginPlay();
 
   PrevLocation = GetActorLocation();
+}
+
+float ARadar::ComputeIntensity(const FRadarDetection& RawDetection) const
+{
+  const float Distance = RawDetection.depth;
+
+  const float AttenAtm = AtmospAttenRate;
+  const float AbsAtm = exp(-AttenAtm * Distance);
+
+  const float IntRec = AbsAtm;
+
+  return IntRec;
 }
 
 void ARadar::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
